@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: notification
+  datasource:
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://postgres:5432/notification
+  jpa:
+    hibernate:
+      ddl-auto: create
+  rabbitmq:
+    addresses: rabbitmq:5672
+  zipkin:
+    base-url: http://zipkin:9411/
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+      fetch-registry: true
+      register-with-eureka: true
+      enabled: false
+
+server:
+  port: 8083
+
+rabbitmq:
+  exchanges:
+    internal: internal.exchange
+  queues:
+    notification: notification.queue
+  routing-keys:
+    internal-notification: internal.notification.routing-key
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://zipkin:9411/api/v2/spans
